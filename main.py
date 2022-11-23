@@ -12,6 +12,7 @@ class PythonCSVConverter:
         """
         self.first_csv_file = first_csv_file
         self.second_csv_file = second_csv_file
+
         
     def load_data_carrier_plans(self):
         carrier_plans_body = []
@@ -22,8 +23,8 @@ class PythonCSVConverter:
             for row in carrier_plans_data:
                 carrier_plans_body.append(row)
             
-        
         return carrier_plans_header,carrier_plans_body
+      
       
     def load_data_resale_plans(self):
         resale_plans_body = []
@@ -36,11 +37,14 @@ class PythonCSVConverter:
             #get body
             for row in resale_plans_data:
                 resale_plans_body.append(row)
-        # print ( resale_plans_header,resale_plans_body)
         return resale_plans_header,resale_plans_body
+            
                        
     def first_case(self):
-        
+        """ 
+        it is necessary to create a File with all related data and fields: 
+        MDN, Resale Plan, Sprint Plan and SOCs.
+        """
         resale_plans_header, resale_plans_body = self.load_data_resale_plans()
         carrier_plans_header, carrier_plans_body = self.load_data_carrier_plans()
         #get mdn 
@@ -67,9 +71,16 @@ class PythonCSVConverter:
             
             for row in final_list:
                 write_data.writerow(row)
+                
+                
                  
     def second_case(self):
-        
+        """ 
+        it is necessary to create a file with related data and fields: 
+        MDN, Resale Plan, Sprint Plan and the field 'LTE SOC' whose value
+        is set to the value 'Y' or 'N', depending on whether the SOCs field
+        in the input file contains the value ' DSMLTESOC'
+        """
         resale_plans_header, resale_plans_body = self.load_data_resale_plans()
         carrier_plans_header, carrier_plans_body = self.load_data_carrier_plans()
         #get mdn 
@@ -100,8 +111,14 @@ class PythonCSVConverter:
             
             for row in final_list:
                 write_data.writerow(row)
+                
+                
     
     def third_case(self):
+        """ 
+        it is necessary to create a file with the distribution of subscribers by resolution plan,
+        how many subscribers are on which resolution plan.
+        """
         
         resale_plans_header, resale_plans_body = self.load_data_resale_plans()
         carrier_plans_header, carrier_plans_body = self.load_data_carrier_plans()
@@ -135,6 +152,7 @@ class PythonCSVConverter:
             for row in final_list:
                 write_data.writerow(row)
                 
+
                 
 #run                 
 CSVPyConverter = PythonCSVConverter("carrier-plans.csv","resale-plans.csv")
